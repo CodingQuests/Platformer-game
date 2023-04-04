@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://key66gxt5vle"]
+
+[ext_resource type="Texture2D" uid="uid://b62g1anf42d6r" path="res://Sunny-land-files/Sunny-land-assets-files/PNG/sprites/cherry/cherry-1.png" id="1_aqj6f"]
+[ext_resource type="Texture2D" uid="uid://bxck78rvjv6vj" path="res://Sunny-land-files/Sunny-land-assets-files/PNG/sprites/cherry/cherry-2.png" id="2_i8c2c"]
+[ext_resource type="Texture2D" uid="uid://ddb37tu77yoq5" path="res://Sunny-land-files/Sunny-land-assets-files/PNG/sprites/cherry/cherry-3.png" id="3_lysro"]
+[ext_resource type="Texture2D" uid="uid://dyuacih3p2432" path="res://Sunny-land-files/Sunny-land-assets-files/PNG/sprites/cherry/cherry-4.png" id="4_5o5if"]
+[ext_resource type="Texture2D" uid="uid://c4r83aknvuhsm" path="res://Sunny-land-files/Sunny-land-assets-files/PNG/sprites/cherry/cherry-5.png" id="5_qjmc7"]
+[ext_resource type="Texture2D" uid="uid://bparnwmuqpoap" path="res://Sunny-land-files/Sunny-land-assets-files/PNG/sprites/cherry/cherry-6.png" id="6_6ngj8"]
+[ext_resource type="Texture2D" uid="uid://bud2cpiiceygm" path="res://Sunny-land-files/Sunny-land-assets-files/PNG/sprites/cherry/cherry-7.png" id="7_exjdx"]
+
+[sub_resource type="GDScript" id="GDScript_u1ajf"]
+script/source = "extends Area2D
+
+
+
+
+func _on_body_entered(body):
+	if body.name == \"Player\":
+		Game.Gold += 5
+		var tween = get_tree().create_tween()
+		var tween1 = get_tree().create_tween()
+		tween.tween_property(self, \"position\", position - Vector2(0,35), 0.35)
+		tween1.tween_property(self, \"modulate:a\", 0, 0.3)
+		
+		tween.tween_callback(queue_free)
+		
+		
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_haxsw"]
+radius = 7.07107
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0cr04"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_aqj6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_i8c2c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lysro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5o5if")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qjmc7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6ngj8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_exjdx")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Cherry" type="Area2D"]
+script = SubResource("GDScript_u1ajf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 1)
+shape = SubResource("CircleShape2D_haxsw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0cr04")
+animation = &"Idle"
+autoplay = "Idle"
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
